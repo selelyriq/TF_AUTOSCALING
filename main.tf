@@ -19,12 +19,12 @@ resource "aws_autoscaling_group" "web_app_asg" {
     id      = aws_launch_template.web_app_template.id
     version = "$Latest"
   }
-  min_size            = 2
-  max_size            = 4
+  min_size = 2
+  max_size = 4
   vpc_zone_identifier = [
-    data.terraform_remote_state.vpc.outputs.publicsubnet1_id, 
+    data.terraform_remote_state.vpc.outputs.publicsubnet1_id,
     data.terraform_remote_state.vpc.outputs.publicsubnet2_id
-    ]
+  ]
 }
 
 resource "aws_lb" "web_app_lb" {
@@ -32,8 +32,8 @@ resource "aws_lb" "web_app_lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.web_app_sg.id]
-  subnets            = [
-    data.terraform_remote_state.vpc.outputs.publicsubnet1_id, 
+  subnets = [
+    data.terraform_remote_state.vpc.outputs.publicsubnet1_id,
     data.terraform_remote_state.vpc.outputs.publicsubnet2_id
   ]
 }
